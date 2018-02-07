@@ -11,7 +11,7 @@ class ShearchBooks extends Component {
     componentWillUnmount() {
         this.handleSearchInput.cancel();
     }
-
+    // followed this video https://www.youtube.com/watch?v=KXao_qwl05k to make the debounce work
     handleSearchInput = debounce(async (query) => {
         const result = await BooksAPI.search(query);
         const searchBooks = result.map((book) => {

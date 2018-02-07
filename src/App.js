@@ -3,7 +3,7 @@ import * as BooksAPI from './BooksAPI';
 import BooksList from './BooksList';
 import SearchBooks from './SearchBooks';
 import { Route } from 'react-router-dom';
-import { debounce } from 'lodash';
+
 import './App.css';
 
 
@@ -25,7 +25,8 @@ class BooksApp extends React.Component {
         title: 'Read',
         books: [],
       },
-    ]
+    ],
+    books : [],
   }
 
   async fetchAllBooks() {
@@ -34,7 +35,7 @@ class BooksApp extends React.Component {
       shelf.books = this.getShelfBooks(books, shelf.id)
       return shelf;
     })
-    this.setState({ shelfs });
+    this.setState({ shelfs, books });
   }
 
   async componentDidMount() {
@@ -50,10 +51,7 @@ class BooksApp extends React.Component {
     return books.filter((book) => book.shelf === shelf); // currentlyReading wantToRead read
   }
 
-  handleSearchInput = debounce(async (query) => {
-    const searchResult = await BooksAPI.search(query);
-    console.log(searchResult);
-  }, 500)
+  
 
   render() {
     return (
@@ -70,7 +68,7 @@ class BooksApp extends React.Component {
             <SearchBooks
               shelfs={this.state.shelfs}
               updateShelf={this.updateShelf}
-              handleSearchInput={this.handleSearchInput}
+              books={this.state.books}
               />
           )}
         />
